@@ -1,8 +1,18 @@
 import React from 'react'
+import { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { searchSong } from '../redux/slice/searchSongSlice';
 
 export default function MainSearch() {
 
-  
+  const dispatch = useDispatch();
+  const [query, setQuery] = useState("");
+  const songs = useSelector( state => state.searchSong.searchedSong )
+
+  const handleSearch = (e) => {
+    e.preventDefault();
+    dispatch(searchSong(query))
+  }
 
   return (
     <>
@@ -15,15 +25,20 @@ export default function MainSearch() {
       <div className="freccette righty">
         <i className="bi bi-chevron-right rounded-circle" />
       </div>
-      <form className="input-group mb-3 w-50 ms-3" id="search">
+      <form 
+          className="input-group mb-3 w-50 ms-3" 
+          id="search"
+          onSubmit={handleSearch}>
         <button
+          onClick={handleSearch}
           className="btn btn-outline-secondary rounded-start-pill searchInp border border-white btnInput"
-          type="button"
+          type="submit"
           id="button-addon1"
         >
           <i className="bi bi-search" />
         </button>
         <input
+          onChange={(e) => setQuery(e.target.value)}
           type="search"
           className="form-control rounded-end-pill searchInp text-white"
           placeholder="Cosa vuoi ascoltare?"

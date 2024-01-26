@@ -1,6 +1,6 @@
 import React from 'react'
 
-import Main from '../components/Main'
+import MainAlbum from '../components/MainAlbum'
 import LeftBar from '../components/LeftBar'
 import RightBar from '../components/RightBar'
 import Player from '../components/Player'
@@ -9,7 +9,7 @@ export default function AlbumPage() {
   return (
     <>
       <LeftBar />
-      <Main />
+      <MainAlbum />
       <RightBar />
       <Player />
     </>

@@ -3,20 +3,25 @@ import { url , XRapidAPIKey, XRapidAPIHost } from "../../dati/dati";
 import axios from "axios";
 
 const initialState = {
-  artistRow: [[],[],[]],
+  artistRow: [],
   loading: false,
   error: ""
 } 
 
-export const fetchRowArtist = createAsyncThunk("users/fetch", async () => {
-    return await axios.get(url , {
+const nomiRandom = [
+  "Caparezza","Salmo","Marracash","Fabri Fibra","Sfera Ebbasta","Nitro","Lazza","Rkomi","Clementino","Mezzosangue","Emis Killa","Luche","Noyz Narcos","Fedez","J-Ax","Ensi","Madman","Gemitaiz","Eminem", "Jay-Z", "Kendrick Lamar", "Nas", "Drake", "Snoop Dogg", "Kanye West", "Cardi B", "Travis Scott", "Lil Wayne", "Nicki Minaj", "Future", "Megan Thee Stallion", "J. Cole", "Lil Uzi Vert", "A$AP Rocky", "Chance the Rapper", "Logic", "2Pac", "Biggie Smalls", "Wiz Khalifa", "Missy Elliott", "Ice Cube", "DMX", "50 Cent", "Lauryn Hill", "Kid Cudi", "Run-D.M.C.", "Public Enemy"
+];
+const artistRandom = nomiRandom[Math.floor(Math.random() * nomiRandom.length)]
+
+export const fetchRowArtist = createAsyncThunk("artistRow/fetch", async () => {
+    //console.log("sono in fetch row");
+    const response = await axios.get(url+artistRandom , {
       headers: {
         "X-RapidAPI-Key": XRapidAPIKey,
         "X-RapidAPI-Host": XRapidAPIHost
       }
     } )
-    .then ((response) => response.data)
-    .catch ((error) => console.log(error))
+    return response.data
 })
 
 // lo Slice è un elemento composto da nome, statoiniziale, reducers, azioni extrareducers
@@ -27,14 +32,14 @@ const artistRowSlice = createSlice({
     extraReducers: (builder) => {
       builder
         .addCase(fetchRowArtist.pending, (state) => {
-          state.status = 'loading';
+          state.loading = 'loading';
         })
         .addCase(fetchRowArtist.fulfilled, (state, action) => {
-          state.status = 'succeeded';
-          state.data = action.payload;
+          state.loading = 'succeeded';
+          state.artistRow = action.payload;
         })
         .addCase(fetchRowArtist.rejected, (state, action) => {
-          state.status = 'failed';
+          state.loading = 'failed';
           state.error = action.error.message;
         });
     }

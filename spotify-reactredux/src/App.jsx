@@ -16,8 +16,8 @@ function App() {
         <div className="row riga d-flex justify-content-between">
           <Routes>
             <Route path="/" element={<HomePage />}/> 
-            <Route path="/artist" element={<ArtistPage />}/> 
-            <Route path="/album" element={<AlbumPage />} /> 
+            <Route path="/artist/:id" element={<ArtistPage />}/> 
+            <Route path="/album/:id" element={<AlbumPage />} /> 
             <Route path="/search" element={<SearchPage />} /> 
             <Route path="*" element={<NotFoundPage />} /> 
           </Routes>
